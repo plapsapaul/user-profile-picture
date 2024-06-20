@@ -992,7 +992,9 @@ class Metronet_Profile_Picture {
             array(
                 'methods'             => 'POST',
                 'callback'            => array( $this, 'rest_api_change_profile_image' ),
-                'permission_callback' => '__return_true',
+                'permission_callback' => function( $request ){
+                    return current_user_can( 'manage_options' );
+                }
             )
         );
         register_rest_route(

@@ -25,42 +25,42 @@ if( !class_exists('PB_Handle_Transition') ){
 
             if ( isset( $_REQUEST['upp_install_pb_plugin_success'] ) ){
                 if ( $_REQUEST['upp_install_pb_plugin_success'] === 'true' ){
-                    echo '<div class="notice updated is-dismissible "><p>' . esc_html__('Plugin activated.', 'profile-builder') . '</p></div>';
+                    echo '<div class="notice updated is-dismissible "><p>' . apply_filters( 'upp_plugin_activation_success_message', esc_html__('Plugin activated.', 'profile-builder') ) . '</p></div>';
                 } else if ( $_REQUEST['upp_install_pb_plugin_success'] === 'false' ) {
-                    echo '<div class="notice notice-error is-dismissible "><p>' . wp_kses( sprintf( __('Could not install. Try again from <a href="%s" >Plugins Dashboard.</a>', 'profile-builder'), admin_url('plugins.php') ), array('a' => array( 'href' => array() ) ) ) . '</p></div>';
+                    echo '<div class="notice notice-error is-dismissible "><p>' . wp_kses( sprintf( apply_filters( 'upp_plugin_activation_fail_message', __('Could not install. Try again from the <a href="%s" >Plugins Dashboard.</a>', 'profile-builder') ), apply_filters( 'upp_plugin_activation_fail_link', admin_url('plugins.php') ) ), array('a' => array( 'href' => array() ) ) ) . '</p></div>';
                 }
             } elseif( !defined( 'PROFILE_BUILDER_VERSION' ) ){
                 echo '<div class="notice notice-info is-dismissible"><p>';
                 echo '<strong>User Profile Picture</strong></p><p>';
-                printf( esc_html__( 'The User Profile Picture functionality has been migrated into Profile Builder as an add-on. Please install and activate the Profile Builder plugin to use this new add-on.', 'profile-builder' ) );
+                printf( apply_filters( 'upp_transition_notice_part_1', esc_html__( 'The User Profile Picture functionality has been migrated into Profile Builder as an add-on. Please install and activate the Profile Builder plugin to use this new add-on.', 'profile-builder' ) ) );
                 echo '</p>';
                 echo '<p>';
-                printf( esc_html__( 'This plugin will continue to function as it is now, but it will not receive further updates. You can read more about this transition in', 'profile-builder' ) );
+                printf( apply_filters( 'upp_transition_notice_part_2', esc_html__( 'This plugin will continue to function as it is now, but it will not receive further updates. You can read more about this transition in', 'profile-builder' ) ) );
                 echo ' ';
-                echo '<a href="https://www.cozmoslabs.com/user-profile-picture/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'this', 'profile-builder' ) . '</a>';
+                echo '<a href="' . apply_filters( 'upp_transition_notice_link_target', "https://www.cozmoslabs.com/user-profile-picture/" ) . '" target="_blank" rel="noopener noreferrer">' . apply_filters( 'upp_transition_notice_link_text', esc_html__( 'this', 'profile-builder' ) ) . '</a>';
                 echo ' ';
-                wp_kses( printf( esc_html__( "section of Profile Builder's Documentation.", 'profile-builder' ) ), array('a' => array( 'href' => array() ) ) );
+                wp_kses( printf( apply_filters( 'upp_transition_notice_part_3', esc_html__( "section of Profile Builder's Documentation.", 'profile-builder' ) ) ), array('a' => array( 'href' => array() ) ) );
                 echo '</p>';
-                echo '<p><a href="' . esc_url( add_query_arg( array( 'action' => 'pb_install_pb_plugin', 'nonce' => wp_create_nonce( 'pb_install_pb_plugin' ) ) ) ) . '" type="button" class="button-primary">' . esc_html__( 'Install & Activate', 'profile-builder' ) . '</a></p>';
+                echo '<p><a href="' . esc_url( add_query_arg( array( 'action' => 'pb_install_pb_plugin', 'nonce' => wp_create_nonce( 'pb_install_pb_plugin' ) ) ) ) . '" type="button" class="button-primary">' . apply_filters( 'upp_transition_notice_button_text', esc_html__( 'Install & Activate', 'profile-builder' ) ) . '</a></p>';
                 echo '</div>';
             } else {
                 if( version_compare( PROFILE_BUILDER_VERSION, '3.11.7', '<' ) ){
                     echo '<div class="notice notice-info is-dismissible"><p>';
-                    echo esc_html( __('The User Profile Picture functionality has been migrated into Profile Builder as an add-on. Please update the Profile Builder plugin to at least version 3.11.7 to make use of this new add-on.', 'profile-builder') );
+                    echo apply_filters( 'upp_transition_notice_update_pb', esc_html__('The User Profile Picture functionality has been migrated into Profile Builder as an add-on. Please update the Profile Builder plugin to at least version 3.11.7 to make use of this new add-on.', 'profile-builder') );
                     echo '</p></div>';
                 } else {
                     echo '<div class="notice notice-info is-dismissible"><p>';
                     echo '<strong>User Profile Picture</strong></p><p>';
-                    printf( esc_html__( 'The User Profile Picture functionality has been migrated into Profile Builder as an add-on. Do you wish to enable this new add-on and deactivate the User Profile Picture plugin?', 'profile-builder' ) );
+                    printf( apply_filters( 'upp_transition_notice_enable_add_on_part_1', esc_html__( 'The User Profile Picture functionality has been migrated into Profile Builder as an add-on. Do you wish to enable this new add-on and deactivate the User Profile Picture plugin?', 'profile-builder' ) ) );
                     echo '</p>';
                     echo '<p>';
-                    printf( esc_html__( 'This plugin will continue to function as it is now, but it will not receive further updates. You can read more about this transition in', 'profile-builder' ) );
+                    printf( apply_filters( 'upp_transition_notice_enable_add_on_part_2', esc_html__( 'This plugin will continue to function as it is now, but it will not receive further updates. You can read more about this transition in', 'profile-builder' ) ) );
                     echo ' ';
-                    echo '<a href="https://www.cozmoslabs.com/user-profile-picture/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'this', 'profile-builder' ) . '</a>';
+                    echo '<a href="' . apply_filters( 'upp_transition_notice_enable_add_on_link_target', "https://www.cozmoslabs.com/user-profile-picture/" ) . '" target="_blank" rel="noopener noreferrer">' . apply_filters( 'upp_transition_notice_enable_add_on_link_text', esc_html__( 'this', 'profile-builder' ) ) . '</a>';
                     echo ' ';
-                    wp_kses( printf( esc_html__( "section of Profile Builder's Documentation.", 'profile-builder' ) ), array('a' => array( 'href' => array() ) ) );
+                    wp_kses( printf( apply_filters( 'upp_transition_notice_enable_add_on_part_3', esc_html__( "section of Profile Builder's Documentation.", 'profile-builder' ) ) ), array('a' => array( 'href' => array() ) ) );
                     echo '</p>';
-                    echo '<p><a href="' . esc_url( add_query_arg( array( 'action' => 'pb_install_pb_plugin', 'nonce' => wp_create_nonce( 'pb_install_pb_plugin' ) ) ) ) . '" type="button" class="button-primary">' . esc_html__( 'Activate the add-on', 'profile-builder' ) . '</a></p>';
+                    echo '<p><a href="' . esc_url( add_query_arg( array( 'action' => 'pb_install_pb_plugin', 'nonce' => wp_create_nonce( 'pb_install_pb_plugin' ) ) ) ) . '" type="button" class="button-primary">' . apply_filters( 'upp_transition_notice_enable_add_on_button_text', esc_html__( 'Activate the add-on', 'profile-builder' ) ) . '</a></p>';
                     echo '</div>';
                 }
             }

@@ -4,7 +4,7 @@ Plugin Name: User Profile Picture
 Plugin URI: http://wordpress.org/plugins/metronet-profile-picture/
 Description: Use the native WP uploader on your user profile page.
 Author: Cozmoslabs
-Version: 2.6.1
+Version: 2.6.2
 Requires at least: 4.6
 Author URI: https://www.cozmoslabs.com
 Contributors: ronalfy
@@ -12,7 +12,7 @@ Text Domain: metronet-profile-picture
 Domain Path: /languages
 */
 
-define( 'METRONET_PROFILE_PICTURE_VERSION', '2.6.0' );
+define( 'METRONET_PROFILE_PICTURE_VERSION', '2.6.2' );
 define( 'METRONET_PROFILE_PICTURE_PLUGIN_NAME', 'User Profile Picture' );
 define( 'METRONET_PROFILE_PICTURE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'METRONET_PROFILE_PICTURE_URL', plugins_url( '/', __FILE__ ) );
@@ -992,7 +992,9 @@ class Metronet_Profile_Picture {
             array(
                 'methods'             => 'POST',
                 'callback'            => array( $this, 'rest_api_change_profile_image' ),
-                'permission_callback' => '__return_true',
+                'permission_callback' => function( $request ){
+                    return current_user_can( 'manage_options' );
+                }
             )
         );
         register_rest_route(
